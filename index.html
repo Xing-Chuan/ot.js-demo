@@ -25,12 +25,20 @@
   <script>
     var socket = io()
     socket.on('doc', function(data) {
+      // console.log('doc.data ->', data);
       var cm = CodeMirror.fromTextArea(document.getElementById('note'), {lineNumbers: true})
       cm.setValue(data.str)
       var serverAdapter = new ot.SocketIOAdapter(socket)
       var editorAdapter = new ot.CodeMirrorAdapter(cm)
       var client = new ot.EditorClient(data.revision, data.clients, serverAdapter, editorAdapter)
-    })
+    });
+
+    /* Test */
+    const {
+      TextOperation,
+    } = ot;
+    // const str0 = "misaka mikoto";
+
   </script>
 </body>
 </html>
