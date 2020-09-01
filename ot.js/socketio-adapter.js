@@ -7,6 +7,7 @@ ot.SocketIOAdapter = (function () {
     this.socket = socket;
 
     var self = this;
+    // 观察远端发送过来的操作
     socket
       .on('client_left', function (clientId) {
         self.trigger('client_left', clientId);
@@ -27,19 +28,30 @@ ot.SocketIOAdapter = (function () {
       });
   }
 
+  // 发送本地操作
   SocketIOAdapter.prototype.sendOperation = function (revision, operation, selection) {
+    // console.log('socket.client.sendOperation ->', {
+    //   revision, operation, selection,
+    // });
     this.socket.emit('operation', revision, operation, selection);
   };
 
+  // 发送当前光标所处位置
   SocketIOAdapter.prototype.sendSelection = function (selection) {
+    // console.log('socket.client.sendSelection ->', {
+    //   selection,
+    // });
     this.socket.emit('selection', selection);
   };
 
+  // 注册远端Client操作的处理事件
   SocketIOAdapter.prototype.registerCallbacks = function (cb) {
     this.callbacks = cb;
   };
 
+  // 分发不同的远端Client操作给对应方法处理
   SocketIOAdapter.prototype.trigger = function (event) {
+    console.log('SocketIOAdapter.trigger ->', event);
     var args = Array.prototype.slice.call(arguments, 1);
     var action = this.callbacks && this.callbacks[event];
     if (action) { action.apply(this, args); }
