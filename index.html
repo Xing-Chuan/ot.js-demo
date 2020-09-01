@@ -25,7 +25,7 @@
   <script>
     var socket = io()
     socket.on('doc', function(data) {
-      // console.log('doc.data ->', data);
+      console.log('doc.data ->', data);
       var cm = CodeMirror.fromTextArea(document.getElementById('note'), {lineNumbers: true})
       cm.setValue(data.str)
       var serverAdapter = new ot.SocketIOAdapter(socket)
