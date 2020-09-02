@@ -52,9 +52,9 @@ ot.EditorClient = (function () {
 
 
   function OtherClient (id, listEl, editorAdapter, name, selection) {
-    this.id = id;
+    this.id = id; // 当前服务端维持的文本变更版本号（version）
     this.listEl = listEl;
-    this.editorAdapter = editorAdapter;
+    this.editorAdapter = editorAdapter; // codeMirror编辑器实例的包装
     this.name = name;
 
     this.li = document.createElement('li');
@@ -121,8 +121,11 @@ ot.EditorClient = (function () {
     var self = this;
 
     this.editorAdapter.registerCallbacks({
+      // 本地文本有变更
       change: function (operation, inverse) { self.onChange(operation, inverse); },
+      // 本地光标位置有变更
       selectionChange: function () { self.onSelectionChange(); },
+      // 编辑器失焦
       blur: function () { self.onBlur(); }
     });
     this.editorAdapter.registerUndo(function () { self.undo(); });

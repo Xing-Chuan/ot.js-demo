@@ -110,8 +110,9 @@ ot.CodeMirrorAdapter = (function (global) {
     for (var i = changes.length - 1; i >= 0; i--) {
       var change = changes[i];
       indexFromPos = updateIndexFromPos(indexFromPos, change);
-
+      // change后光标停留的位置
       var fromIndex = indexFromPos(change.from);
+      // change后光标停留的位置距离文档最后还有多少length
       var restLength = docEndLength - fromIndex - sumLengths(change.text);
 
       operation = new TextOperation()
@@ -174,6 +175,7 @@ ot.CodeMirrorAdapter = (function (global) {
   };
 
   CodeMirrorAdapter.prototype.onChanges = function (_, changes) {
+    // console.log('changes ->', changes);
     if (!this.ignoreNextChange) {
       var pair = CodeMirrorAdapter.operationFromCodeMirrorChanges(changes, this.cm);
       this.trigger('change', pair[0], pair[1]);
@@ -200,6 +202,7 @@ ot.CodeMirrorAdapter = (function (global) {
     return this.cm.getValue();
   };
 
+  // 获取当前光标位置
   CodeMirrorAdapter.prototype.getSelection = function () {
     var cm = this.cm;
 
@@ -211,7 +214,6 @@ ot.CodeMirrorAdapter = (function (global) {
         cm.indexFromPos(selectionList[i].head)
       );
     }
-
     return new Selection(ranges);
   };
 

@@ -31,14 +31,9 @@
       var serverAdapter = new ot.SocketIOAdapter(socket)
       var editorAdapter = new ot.CodeMirrorAdapter(cm)
       var client = new ot.EditorClient(data.revision, data.clients, serverAdapter, editorAdapter)
+
+      window.cm = cm;
     });
-
-    /* Test */
-    const {
-      TextOperation,
-    } = ot;
-    // const str0 = "misaka mikoto";
-
   </script>
 </body>
 </html>
