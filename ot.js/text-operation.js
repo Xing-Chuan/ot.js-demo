@@ -17,7 +17,7 @@ ot.TextOperation = (function () {
     // if an imaginary cursor runs over the entire string and skips over some
     // parts, deletes some parts and inserts characters at some positions. These
     // actions (skip/delete/insert) are stored as an array in the "ops" property.
-    this.ops = [];
+    this.ops = []; // 存储（跳过/删除/插入）的操作动作
     // An operation's baseLength is the length of every string the operation
     // can be applied to.
     this.baseLength = 0;
@@ -43,7 +43,12 @@ ot.TextOperation = (function () {
   // * Insert ops: Insert a given string at the current cursor position.
   //   Represented by strings.
   // * Delete ops: Delete the next n characters. Represented by negative ints.
-
+  /**
+   * Operation 本质是一个 ops 操作列表，ops 有以下3种类型：
+   * Retain操作：按照给定的数字前进虚拟光标，数字大于0
+   * Insert操作：在正确的虚拟光标位置插入一个给定字符串
+   * Delete操作：删除接下来的n个字符，字符数量标识num是负数
+   */
   var isRetain = TextOperation.isRetain = function (op) {
     return typeof op === 'number' && op > 0;
   };
