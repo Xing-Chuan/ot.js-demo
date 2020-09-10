@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "build": "rollup -c ./config/rollup.config.js -w"
+    "build": "cross-env NODE_ENV=development rollup -c ./config/rollup.config.js -w"
   },
   "repository": {
     "type": "git",
@@ -40,16 +40,18 @@
     "@babel/preset-react": "7.0.0",
     "@babel/preset-stage-0": "7.0.0",
     "@babel/runtime": "7.4.4",
+    "@rollup/plugin-babel": "^5.2.1",
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "@types/classnames": "2.2.6",
     "@types/prop-types": "15.5.6",
     "@types/react": "^16.8.14",
     "@types/react-dom": "^16.0.11",
-    "@rollup/plugin-babel": "^5.2.1",
-    "@rollup/plugin-commonjs": "^15.0.0",
-    "@rollup/plugin-node-resolve": "^9.0.0",
+    "cross-env": "^7.0.2",
     "rollup": "^2.26.11",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-less": "^1.1.2",
+    "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-typescript": "^1.0.1"
   }
 }

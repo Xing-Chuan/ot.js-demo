@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "lib": ["dom", "es7"]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
