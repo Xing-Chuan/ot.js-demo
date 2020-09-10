@@ -2,10 +2,6 @@
 <head>
   <meta charset="UTF-8">
   <title>ot.js Demo</title>
-</head>
-<body>
-  <textarea id="note"></textarea>
-  <div id="editor"></div>
 
   <!-- ot.js -->
   <script src="ot.js/text-operation.js"></script>
@@ -23,9 +19,11 @@
   <script src="node_modules/codemirror/lib/codemirror.js"></script>
   <!-- socket.io -->
   <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
-  <script src="./dist/index.js"></script>
+</head>
+<body>
+  <textarea id="note"></textarea>
   <!-- init client -->
-  <!-- <script>
+  <script>
     var socket = io()
     /**
      * doc.data
@@ -44,6 +42,6 @@
       // TODO: test
       window.cm = cm;
     });
-  </script> -->
+  </script>
 </body>
 </html>
