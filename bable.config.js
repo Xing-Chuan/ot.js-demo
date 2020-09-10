@@ -1,4 +1,4 @@
-{
+module.exports = {
   "presets": ["@babel/env", "@babel/react"],
   "compact": false,
   "plugins": [
@@ -15,6 +15,11 @@
       { "loose": true }
     ],
     ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }],
+    ["@babel/transform-react-jsx", {
+      "pragma": "Preact.h", // default pragma is React.createElement
+      "pragmaFrag": "Preact.Fragment", // default is React.Fragment
+      "throwIfNamespace": false // defaults to true
+    }],
     ["@babel/transform-runtime", {
       "helpers": false,
       "regenerator": true

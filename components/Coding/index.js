@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Menu, Dropdown } from 'antd';
 
-import CodeMirror from '../../../react-codemirror-fe/src';
+import CodeMirror from '../react-codemirror-fe/src';
 
 import './index.less';
-import LocaleProvider from 'antd/lib/locale-provider';
+// import LocaleProvider from 'antd/lib/locale-provider';
 
 const supportLang = CodeMirror.supportLang;
 
