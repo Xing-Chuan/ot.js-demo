@@ -11,6 +11,10 @@ demo for ot.js
 
 - Server 实现
 
+- Version
+
+- Client和Server操作队列
+
   
 
 ## Development

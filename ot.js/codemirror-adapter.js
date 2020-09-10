@@ -178,6 +178,7 @@ ot.CodeMirrorAdapter = (function (global) {
     // console.log('changes ->', changes);
     if (!this.ignoreNextChange) {
       var pair = CodeMirrorAdapter.operationFromCodeMirrorChanges(changes, this.cm);
+      // [operation, inverse]
       this.trigger('change', pair[0], pair[1]);
     }
     if (this.selectionChanged) { this.trigger('selectionChange'); }

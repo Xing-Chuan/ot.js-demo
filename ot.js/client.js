@@ -18,16 +18,19 @@ ot.Client = (function (global) {
   };
 
   // Call this method when the user changes the document.
+  // 本地有操作变化时触发，3种state都有实现 applyClient 同名方法
   Client.prototype.applyClient = function (operation) {
     this.setState(this.state.applyClient(this, operation));
   };
 
   // Call this method with a new operation from the server
+  // 远端有操作变化时触发，3种state都有实现 applyServer 同名方法，版本号+1
   Client.prototype.applyServer = function (operation) {
     this.revision++;
     this.setState(this.state.applyServer(this, operation));
   };
 
+  // 发送给服务端的op，得到服务端的肯定回应，版本号+1
   Client.prototype.serverAck = function () {
     this.revision++;
     this.setState(this.state.serverAck(this));
@@ -60,9 +63,11 @@ ot.Client = (function (global) {
 
   // In the 'Synchronized' state, there is no pending operation that the client
   // has sent to the server.
+  // Synchronized：此时本地文档状态与服务端一致
   function Synchronized () {}
   Client.Synchronized = Synchronized;
 
+  // 发送操作，转换为 AwaitingConfirm 状态等待服务端回应
   Synchronized.prototype.applyClient = function (client, operation) {
     // When the user makes an edit, send the operation to the server and
     // switch to the 'AwaitingConfirm' state
@@ -70,6 +75,7 @@ ot.Client = (function (global) {
     return new AwaitingConfirm(operation);
   };
 
+  // 接收服务端的操作，因本地无新操作，可以直接将远端操作应用到文档中
   Synchronized.prototype.applyServer = function (client, operation) {
     // When we receive a new operation from the server, the operation can be
     // simply applied to the current document
@@ -77,11 +83,13 @@ ot.Client = (function (global) {
     return this;
   };
 
+  // Synchronized 状态下不会收到 ack
   Synchronized.prototype.serverAck = function (client) {
     throw new Error("There is no pending operation.");
   };
 
   // Nothing to do because the latest server state and client state are the same.
+  // Synchronized 状态下本地光标位置与服务端一致
   Synchronized.prototype.transformSelection = function (x) { return x; };
 
   // Singleton
@@ -90,6 +98,7 @@ ot.Client = (function (global) {
 
   // In the 'AwaitingConfirm' state, there's one operation the client has sent
   // to the server and is still waiting for an acknowledgement.
+  // AwaitingConfirm：本地已发送操作至服务端，正在等待回应，且本地没有其他操作
   function AwaitingConfirm (outstanding) {
     // Save the pending operation
     this.outstanding = outstanding;
@@ -137,6 +146,7 @@ ot.Client = (function (global) {
 
   // In the 'AwaitingWithBuffer' state, the client is waiting for an operation
   // to be acknowledged by the server while buffering the edits the user makes
+  // AwaitingWithBuffer: 等待服务端 ack，同时缓存本地的新操作
   function AwaitingWithBuffer (outstanding, buffer) {
     // Save the pending operation and the user's edits since then
     this.outstanding = outstanding;
@@ -144,6 +154,7 @@ ot.Client = (function (global) {
   }
   Client.AwaitingWithBuffer = AwaitingWithBuffer;
 
+  // 只要没收到服务端 ack，会一直缓存本地新增的操作
   AwaitingWithBuffer.prototype.applyClient = function (client, operation) {
     // Compose the user's changes onto the buffer
     var newBuffer = this.buffer.compose(operation);

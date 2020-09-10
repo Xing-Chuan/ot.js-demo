@@ -10,6 +10,7 @@ ot.SocketIOAdapter = (function () {
     // 观察远端发送过来的操作
     socket
       .on('client_left', function (clientId) {
+        // 远端有client链接断开
         self.trigger('client_left', clientId);
       })
       .on('set_name', function (clientId, name) {
@@ -51,8 +52,8 @@ ot.SocketIOAdapter = (function () {
 
   // 分发不同的远端Client操作给对应方法处理
   SocketIOAdapter.prototype.trigger = function (event) {
-    console.log('SocketIOAdapter.trigger ->', event);
     var args = Array.prototype.slice.call(arguments, 1);
+    // console.log('SocketIOAdapter.trigger ->', event, args);
     var action = this.callbacks && this.callbacks[event];
     if (action) { action.apply(this, args); }
   };

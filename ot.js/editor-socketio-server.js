@@ -66,9 +66,11 @@ EditorSocketIOServer.prototype.addClient = function (socket) {
     });
 };
 
+// 处理操作接收
 EditorSocketIOServer.prototype.onOperation = function (socket, revision, operation, selection) {
   var wrapped;
   try {
+    // 转换成一个wrap格式的操作数据结构
     wrapped = new WrappedOperation(
       TextOperation.fromJSON(operation),
       selection && Selection.fromJSON(selection)

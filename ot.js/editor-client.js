@@ -111,6 +111,7 @@ ot.EditorClient = (function () {
 
   function EditorClient (revision, clients, serverAdapter, editorAdapter) {
     Client.call(this, revision);
+    console.log('EditorClient.this ->', this);
     this.serverAdapter = serverAdapter;
     this.editorAdapter = editorAdapter;
     this.undoManager = new UndoManager();
@@ -209,6 +210,7 @@ ot.EditorClient = (function () {
     );
   };
 
+  // 远端有client链接断开
   EditorClient.prototype.onClientLeft = function (clientId) {
     console.log("User disconnected: " + clientId);
     var client = this.clients[clientId];
@@ -246,7 +248,6 @@ ot.EditorClient = (function () {
     this.updateSelection();
     var meta = new SelfMeta(selectionBefore, this.selection);
     var operation = new WrappedOperation(textOperation, meta);
-
     var compose = this.undoManager.undoStack.length > 0 &&
       inverse.shouldBeComposedWithInverted(last(this.undoManager.undoStack).wrapped);
     var inverseMeta = new SelfMeta(this.selection, selectionBefore);

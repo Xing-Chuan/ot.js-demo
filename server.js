@@ -9,6 +9,7 @@ app.get('/', function(req, res){
 
 app.use('/ot.js', express.static('ot.js'));
 app.use('/node_modules', express.static('node_modules'));
+app.use('/dist', express.static('dist'));
 
 http.listen(3000, function(){
   console.log('listening on *:3000');

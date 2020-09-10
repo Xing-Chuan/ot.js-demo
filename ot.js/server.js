@@ -19,8 +19,8 @@ ot.Server = (function (global) {
     }
     // Find all operations that the client didn't know of when it sent the
     // operation ...
+    // 获取多端基于同版本同时发送到服务端的操作
     var concurrentOperations = this.operations.slice(revision);
-
     // ... and transform the operation against all these operations ...
     var transform = operation.constructor.transform;
     for (var i = 0; i < concurrentOperations.length; i++) {
