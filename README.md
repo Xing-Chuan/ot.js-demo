@@ -120,3 +120,13 @@ delete(-4)
 - text-operation.js - [Client、Server] 文本变更操作的底层处理
 - wrapped-operation.js - [Client、Server] selection 和 text-operation 的合并数据，最终传输的数据格式
 - simple-text-operation.js - [Client、Server] 简版的 text-operation.js
+
+
+
+![test](./images/test.jpg)
+
+
+
+
+
+### 
